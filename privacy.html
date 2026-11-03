@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy · Enneagram 360</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{--bg:#f3f4f2;--surface:#fff;--ink:#1d2523;--muted:#5d6b67;--line:#d9dfdc;--accent:#1f5f5b;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#121816;--surface:#1a2220;--ink:#e6ece9;--muted:#9aaaa5;--line:#2c3633;--accent:#6fc2b9;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Figtree,system-ui,sans-serif;padding:24px max(16px,env(safe-area-inset-left)) 56px max(16px,env(safe-area-inset-right))}
+main{max-width:680px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+header{max-width:680px;margin:0 auto 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+a{color:var(--accent)} h1,h2{font-family:Newsreader,Georgia,serif;line-height:1.2} h1{font-size:1.9rem;margin:.2em 0} h2{font-size:1.15rem;margin:1.4em 0 .3em}
+select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.muted{color:var(--muted);font-size:.9rem} ul{padding-left:1.2em}
+</style>
+</head>
+<body>
+<header><a href="./">← Enneagram 360</a><select id="lang" aria-label="Language"><option value="en">English</option><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="ro">Română</option></select></header>
+<main id="doc"></main>
+<script>
+const C="Anil Tanriverdi, Switzerland · <a href=\"mailto:tanriverdi.anil@gmail.com\">tanriverdi.anil@gmail.com</a>";
+const P={
+en:{t:"Privacy notice",u:"Enneagram 360 pilot · Last updated November 3, 2026",s:[
+["Who is responsible",C],
+["What is stored","When you ask for your profile, these are saved: your email address, the first name or nickname you entered (optional), your language, your test result (type, wing, instincts, level, direction and scores) and, if you send it, your feedback.<br><b>Not stored:</b> your individual answers and your answers about your family. They stay in your browser."],
+["Why","<ul><li>To email you your profile.</li><li>To evaluate and improve this pilot.</li><li>Only if you ticked the box and confirmed by email: to send you occasional updates about Enneagram 360.</li></ul>"],
+["Where","The data is kept in a private Google Sheet in Anil's Google account, and emails are sent through Gmail. Google may process data outside Switzerland and the EU. The website is hosted on GitHub Pages and uses Google Fonts; as part of delivering the page, these providers receive your IP address."],
+["How long","Pilot data is kept until the end of the pilot and then deleted or anonymized. If you subscribed to updates, your email address is kept until you unsubscribe."],
+["Your rights","You can ask to see, correct or delete your data, and withdraw your consent at any time, by writing to the address above. Every email contains an unsubscribe link."],
+["No tracking","There are no cookies and no analytics. The page only remembers your language choice in your own browser."],
+["Not a diagnosis","Enneagram 360 is a tool for self-reflection, not a psychological or medical assessment."]]},
+tr:{t:"Gizlilik bildirimi",u:"Enneagram 360 pilot · Son güncelleme: 3 Kasım 2026",s:[
+["Sorumlu kişi",C],
+["Ne saklanır","Profilinizi istediğinizde şunlar kaydedilir: e-posta adresiniz, girdiyseniz adınız ya da takma adınız, diliniz, test sonucunuz (tip, kanat, içgüdüler, seviye, yön ve puanlar) ve gönderirseniz geri bildiriminiz.<br><b>Saklanmayanlar:</b> tek tek yanıtlarınız ve aile hakkındaki yanıtlarınız. Bunlar tarayıcınızda kalır."],
+["Neden","<ul><li>Profilinizi size e-postayla göndermek için.</li><li>Bu pilot çalışmayı değerlendirmek ve geliştirmek için.</li><li>Yalnızca kutuyu işaretleyip e-postayla onayladıysanız: Enneagram 360 hakkında ara sıra bilgi göndermek için.</li></ul>"],
+["Nerede","Veriler, Anıl’ın Google hesabındaki gizli bir Google E-Tablosunda tutulur; e-postalar Gmail üzerinden gönderilir. Google verileri İsviçre ve AB dışında işleyebilir. Web sitesi GitHub Pages üzerinde barındırılır ve Google Fonts kullanır; sayfanın iletilmesi sırasında bu sağlayıcılar IP adresinizi alır."],
+["Ne kadar süre","Pilot verileri pilot çalışmanın sonuna kadar saklanır, ardından silinir ya da anonimleştirilir. Bültene abone olduysanız e-posta adresiniz abonelikten çıkana kadar saklanır."],
+["Haklarınız","Verilerinizi görmeyi, düzeltilmesini ya da silinmesini isteyebilir ve onayınızı istediğiniz zaman geri çekebilirsiniz; yukarıdaki adrese yazmanız yeterlidir. Her e-postada abonelikten çıkma bağlantısı bulunur."],
+["Takip yok","Çerez ve analiz aracı yoktur. Sayfa yalnızca dil seçiminizi kendi tarayıcınızda hatırlar."],
+["Tanı değildir","Enneagram 360 bir öz-farkındalık aracıdır; psikolojik ya da tıbbi bir değerlendirme değildir."]]},
+de:{t:"Datenschutzerklärung",u:"Enneagramm-360-Pilot · Stand: 3. November 2026",s:[
+["Verantwortlich",C],
+["Was gespeichert wird","Wenn du dein Profil anforderst, werden gespeichert: deine E-Mail-Adresse, der Vorname oder Spitzname, den du eingegeben hast (optional), deine Sprache, dein Testergebnis (Typ, Flügel, Instinkte, Stufe, Richtung und Punktwerte) und, falls du es sendest, dein Feedback.<br><b>Nicht gespeichert:</b> deine einzelnen Antworten und deine Antworten zur Familie. Sie bleiben in deinem Browser."],
+["Wozu","<ul><li>Um dir dein Profil per E-Mail zu schicken.</li><li>Um diesen Pilot auszuwerten und zu verbessern.</li><li>Nur wenn du das Häkchen gesetzt und per E-Mail bestätigt hast: um dir gelegentlich Neuigkeiten zu Enneagramm 360 zu schicken.</li></ul>"],
+["Wo","Die Daten liegen in einer privaten Google-Tabelle in Anils Google-Konto; E-Mails werden über Gmail versendet. Google kann Daten außerhalb der Schweiz und der EU verarbeiten. Die Website wird über GitHub Pages bereitgestellt und nutzt Google Fonts; beim Ausliefern der Seite erhalten diese Anbieter deine IP-Adresse."],
+["Wie lange","Pilotdaten werden bis zum Ende des Pilots aufbewahrt und danach gelöscht oder anonymisiert. Wenn du Neuigkeiten abonniert hast, bleibt deine E-Mail-Adresse gespeichert, bis du dich abmeldest."],
+["Deine Rechte","Du kannst jederzeit Auskunft, Berichtigung oder Löschung deiner Daten verlangen und deine Einwilligung widerrufen; schreib dazu an die Adresse oben. Jede E-Mail enthält einen Abmeldelink."],
+["Kein Tracking","Es gibt keine Cookies und keine Analyse-Tools. Die Seite merkt sich nur deine Sprachwahl in deinem eigenen Browser."],
+["Keine Diagnose","Enneagramm 360 ist ein Werkzeug zur Selbstreflexion, keine psychologische oder medizinische Untersuchung."]]},
+ro:{t:"Notă de confidențialitate",u:"Pilot Enneagram 360 · Ultima actualizare: 3 noiembrie 2026",s:[
+["Cine este responsabil",C],
+["Ce se păstrează","Când îți ceri profilul, se salvează: adresa ta de e-mail, prenumele sau porecla introdusă (opțional), limba, rezultatul testului (tip, aripă, instincte, nivel, direcție și scoruri) și, dacă îl trimiți, feedbackul tău.<br><b>Nu se păstrează:</b> răspunsurile individuale și răspunsurile despre familie. Ele rămân în browserul tău."],
+["De ce","<ul><li>Pentru a-ți trimite profilul pe e-mail.</li><li>Pentru a evalua și îmbunătăți acest pilot.</li><li>Doar dacă ai bifat căsuța și ai confirmat prin e-mail: pentru a-ți trimite din când în când noutăți despre Enneagram 360.</li></ul>"],
+["Unde","Datele sunt păstrate într-un Google Sheet privat din contul Google al lui Anil, iar e-mailurile sunt trimise prin Gmail. Google poate prelucra date în afara Elveției și a UE. Site-ul este găzduit pe GitHub Pages și folosește Google Fonts; pentru livrarea paginii, acești furnizori primesc adresa ta IP."],
+["Cât timp","Datele pilotului sunt păstrate până la finalul pilotului, apoi sunt șterse sau anonimizate. Dacă te-ai abonat la noutăți, adresa ta de e-mail este păstrată până te dezabonezi."],
+["Drepturile tale","Poți cere oricând acces, corectarea sau ștergerea datelor și îți poți retrage consimțământul, scriind la adresa de mai sus. Fiecare e-mail conține un link de dezabonare."],
+["Fără urmărire","Nu există cookie-uri și nici instrumente de analiză. Pagina reține doar limba aleasă, în propriul tău browser."],
+["Nu este un diagnostic","Enneagram 360 este un instrument de reflecție personală, nu o evaluare psihologică sau medicală."]]}};
+function show(l){if(!P[l])l="en";const d=P[l];document.documentElement.lang=l;document.title=d.t+" · Enneagram 360";
+ document.getElementById("doc").innerHTML=`<h1>${d.t}</h1><p class="muted">${d.u}</p>`+d.s.map(([h,x])=>`<h2>${h}</h2><div>${x}</div>`).join("");
+ document.getElementById("lang").value=l;try{localStorage.setItem("e360lang",l)}catch(e){}}
+let l0="en";try{l0=localStorage.getItem("e360lang")||(navigator.language||"en").slice(0,2)}catch(e){}
+document.getElementById("lang").onchange=e=>show(e.target.value);show(l0);
+</script>
+</body>
+</html>
