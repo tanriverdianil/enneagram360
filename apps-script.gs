@@ -232,6 +232,7 @@ function doPost(e) {
     if (d.website) return json_({ ok: true });                       // spam trap
     if (d.kind === 'feedback') return feedback_(d);
     if (d.kind === 'result') return result_(d);
+    if (d.kind === 'confirm' || d.kind === 'unsub') return sub_(d);
     return json_({ ok: false, error: 'unknown' });
   } catch (err) {
     return json_({ ok: false, error: 'server' });
@@ -281,6 +282,21 @@ function feedback_(d) {
   return json_({ ok: true });
 }
 
+function sub_(d) {
+  const tok = String(d.token || '');
+  if (!/^[a-f0-9]{32}$/.test(tok)) return json_({ ok: false, error: 'invalid' });
+  const row = findRow_(COL['Token'], tok); if (!row) return json_({ ok: false, error: 'invalid' });
+  const sh = sheet_();
+  if (d.kind === 'confirm') {
+    if (sh.getRange(row, COL['Newsletter']).getValue() === 'no') return json_({ ok: false, error: 'invalid' });
+    sh.getRange(row, COL['Newsletter'], 1, 2).setValues([['confirmed', new Date()]]);
+  } else {
+    sh.getRange(row, COL['Newsletter'], 1, 2).setValues([['unsubscribed', new Date()]]);
+    sh.getRange(row, COL['Profile email']).setValue('unsubscribed');
+  }
+  return json_({ ok: true });
+}
+
 function doGet(e) {
   const p = (e && e.parameter) || {};
   const tok = String(p.t || '');
@@ -313,8 +329,7 @@ function page_(lang, title, sub) {
 /* ---------- the email ---------- */
 function sendProfile_(to, lang, r) {
   const X = TXT[lang];
-  const self = ScriptApp.getService().getUrl();
-  const confirmUrl = self + '?a=confirm&t=' + r.token, unsubUrl = self + '?a=unsub&t=' + r.token;
+  const confirmUrl = PAGE_URL + '#c-' + r.token, unsubUrl = PAGE_URL + '#u-' + r.token;
   const tname = TYPE_NAMES[lang][r.t];
   const subject = fmt_(X.subject, { t: r.t, w: r.w, name: tname });
   const hi = r.name ? fmt_(X.hiName, { name: r.name }) : X.hi;
@@ -346,8 +361,12 @@ function sendProfile_(to, lang, r) {
   MailApp.sendEmail({ to: to, subject: subject, body: plain, htmlBody: html, name: SENDER_NAME });
 }
 
-/* Run this once from the editor to check that sending works (it emails you a sample). */
+/* Run this once from the editor to check that sending works.
+   It sends you a sample email whose button opens a real sample profile. */
 function testEmailToMyself() {
   const me = Session.getActiveUser().getEmail();
-  sendProfile_(me, 'en', { name: 'Anil', t: 8, w: 7, stack: 'SO / SX / SP', l: 4, band: 'Average', dir: 'growth', link: PAGE_URL, token: '0'.repeat(32), news: true });
+  const sample = { v: 2, lg: 'en', n: 'Anil', d: Utilities.formatDate(new Date(), 'UTC', 'yyyy-MM-dd'), t: 8, w: 7, wr: 0.8, s2: 3, s3: 5, c: 'High',
+    sc: [41, 52, 70, 38, 47, 55, 63, 84, 45], i: 'sosxsp', im: [82, 64, 35], l: 4, b: 'Average', dir: 'growth', uh: 0 };
+  const code = 'E360-' + Utilities.base64EncodeWebSafe(JSON.stringify(sample), Utilities.Charset.UTF_8).replace(/=+$/, '');
+  sendProfile_(me, 'en', { name: 'Anil', t: 8, w: 7, stack: 'SO / SX / SP', l: 4, band: 'Average', dir: 'growth', link: PAGE_URL + '#' + code, token: '0'.repeat(32), news: false });
 }
