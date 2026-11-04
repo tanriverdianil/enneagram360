@@ -338,7 +338,7 @@ function sendProfile_(to, lang, r) {
     '</table><p style="text-align:center;margin:0 0 18px">' + btn(r.link, X.cta, '#1f5f5b') + '</p>' +
     '<p style="margin:0 0 18px;color:#5d6b67;font-size:14px">' + esc_(X.keep) + '</p>' +
     (r.news ? '<div style="background:#f5ecd9;border-radius:12px;padding:16px 18px;margin:0 0 18px"><p style="margin:0 0 12px">' + esc_(X.newsAsk) + '</p>' + btn(confirmUrl, X.newsBtn, '#9a6b1f') + '</div>' : '') +
-    '<p style="margin:0">' + esc_(X.sign) + '<br>Anil</p></div>' +
+    '<p style="margin:0">' + esc_(X.sign) + '<br>' + esc_(X.signer) + '</p></div>' +
     '<div style="padding:16px 26px;background:#f8f9f8;color:#7a8783;font-size:12px;line-height:1.5">' + esc_(X.why) + ' <a href="' + unsubUrl + '" style="color:#7a8783">' + esc_(X.unsub) + '</a> · <a href="' + PAGE_URL + 'privacy.html" style="color:#7a8783">' + esc_(X.privacy) + '</a></div>' +
     '</div></div>';
   const plain = [hi, '', X.intro, '', ...facts.map(f => f[0] + ': ' + f[1]), '', X.cta + ': ' + r.link, '', X.keep,
